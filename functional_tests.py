@@ -1,4 +1,6 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import unittest
 
 class NewVisitorTest(unittest.TestCase):
@@ -17,14 +19,23 @@ class NewVisitorTest(unittest.TestCase):
         
         # 他發現網頁標題與標題顯示現在天氣
         self.assertIn('Weather', self.browser.title)
-        self.fail('Finish the test!')
+        header_text = self.browser.find_element(By.TAG_NAME,'h1')
+        self.assertIn('Weather', header_text)
+
 
         # 他受邀輸入一個城市地區
         # (James住在新竹縣竹北市)
+        inputbox = self.browser.find_element(By.ID,'id_new_city')
+        self.assertEqual(
+            inputbox.get_attribute('palceholder'),
+            'Enter a city name'
+        )
 
         # 當他按下enter時，網頁會更新，現在網頁列出
         # "現在天氣"
+        inputbox.send_keys(Keys.ENTER)
 
+        
         # 他很滿意的出門了
 
 
