@@ -24,17 +24,26 @@ class NewVisitorTest(unittest.TestCase):
 
 
         # 他受邀輸入一個城市地區
-        # (James住在新竹縣竹北市)
         inputbox = self.browser.find_element(By.ID,'id_new_city')
         self.assertEqual(
             inputbox.get_attribute('palceholder'),
             'Enter a city name'
         )
 
+        # 他在文字方塊輸入"TAIWAN"
+        inputbox.send_keys("Tainan")
+
+
         # 當他按下enter時，網頁會更新，現在網頁列出
         # "現在天氣"
         inputbox.send_keys(Keys.ENTER)
 
+        Label = self.browser.find_element(By.ID, 'msg_label')
+        self.assertTrue(
+            Label.text == "Tainan weather now is"
+        )
+        
+        self.fail("finish the test!")
         
         # 他很滿意的出門了
 
